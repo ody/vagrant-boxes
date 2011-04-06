@@ -13,12 +13,12 @@ Vagrant::Config.run do |config|
   end
 
   # This will provision the box using puppet
-  #config.vm.provision :puppet do |puppet|
-  #  puppet.options        = "-v --vardir=/var/lib/puppet --ssldir=/var/lib/puppet/ssl"
-  #  puppet.module_path    = "modules"
-  #  puppet.manifests_path = "manifests"
-  #  puppet.manifest_file  = "site.pp"
-  #end
+  config.vm.provision :puppet do |puppet|
+    puppet.options        = "-v --vardir=/var/lib/puppet --ssldir=/var/lib/puppet/ssl"
+    puppet.module_path    = "modules"
+    puppet.manifests_path = "manifests"
+    puppet.manifest_file  = "site.pp"
+  end
 
   ('a'..'j').each do |element|
     meta_vm = {
