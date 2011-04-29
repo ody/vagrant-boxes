@@ -4,37 +4,46 @@ define mcollective::plugins::plugin(
   $ddl         = false,
   $application = false,
   $plugin_base = $mcollective::params::plugin_base
-) inherits mcollective::params {
+) {
+
+  include mcollective::params
+
+  if $plugin_base == '' {
+    $plugin_base_real = $mcollective::params::plugin_base
+  } else {
+    $plugin_base_real = $plugin_base
+  }
 
   if ($ddl == true or $application == true) and $type != 'agent' {
     fail('DDLs and Applications only apply to Agent plugins')
   }
 
-  file { "${plugin_base}/${type}/${name}.rb":
+  file { "${plugin_base_real}/${type}/${name}.rb":
     ensure => $ensure,
+    source => "puppet:///modules/mcollective/plugins/${type}/${name}/${name}.rb",
     mode   => '0644',
     owner  => 'root',
     group  => 'root',
-    source => "puppet:///modules/mcollective/plugins/${type}/${name}/${name}.rb",
+    notify => Class['mcollective::server::service'],
   }
 
   if $ddl {
-    file { "${plugin_base}/${type}/${name}.ddl":
+    file { "${plugin_base_real}/${type}/${name}.ddl":
       ensure => $ensure,
+      source => "puppet:///modules/mcollective/plugins/${type}/${name}/${name}.ddl",
       mode   => '0644',
       owner  => 'root',
       group  => 'root',
-      source => "puppet:///modules/mcollective/plugins/${type}/${name}/${name}.ddl",
     }
   }
 
   if $application {
-    file { "${plugin_base}/application/${name}.rb":
+    file { "${plugin_base_real}/application/${name}.rb":
       ensure => $ensure,
+      source => "puppet:///modules/mcollective/plugins/${type}/${name}/application/${name}.rb",
       mode   => '0644',
       owner  => 'root',
       group  => 'root',
-      source => "puppet:///modules/mcollective/plugins/${type}/${name}/application/${name}.rb",
     }
   }
 

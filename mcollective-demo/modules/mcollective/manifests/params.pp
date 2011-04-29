@@ -1,9 +1,17 @@
 class mcollective::params {
 
-  $plugin_base = $operatingsystem ? {
-    /(?i-mx:ubuntu|debian)/        => '/usr/share/mcollective/plugins/mcollective',
-    /(?i-mx:centos|fedora|redhat)/ => '/usr/libexec/mcollective/mcollective',
+  $mc_topicprefix = '\/topic\/'
+  $mc_main_collective = 'mcollective'
+  $mc_collectives = ''
+  $mc_libdir = $operatingsystem ? {
+    /(?i-mx:ubuntu|debian)/        => '/usr/share/mcollective/plugins',
+    /(?i-mx:centos|fedora|redhat)/ => '/usr/libexec/mcollective',
   }
+  $mc_logfile = '/var/log/mcollective.log'
+  $mc_loglevel = 'log'
+  $mc_daemonize = '1'
+
+  $plugin_base = "${mc_libdir}/mcollective"
 
   $plugin_subs = [
     "${plugin_base}/agent",
@@ -16,11 +24,21 @@ class mcollective::params {
     "${plugin_base}/util",
   ]
 
-  $stomp_server  = '192.168.56.10'
+  $stomp_user    = 'mcollective'
+  $stomp_passwd  = 'marionette'
+  $stomp_server  = 'stomp'
+  $stomp_ip      = '192.168.56.10'
   $stomp_aliases = [
     'stomp.vagrant.internal',
     'aserver.vagrant.internal',
     'aserver',
   ]
+  $stomp_port   = '61613'
 
+  $pkg_provider = $operatingsystem ? {
+    /(?i-mx:ubuntu|debian)/ => 'aptitude',
+    default                 => undef,
+  }
+
+  $pkg_state = 'present'
 }

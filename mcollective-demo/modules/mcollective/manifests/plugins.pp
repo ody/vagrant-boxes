@@ -1,4 +1,4 @@
-class mcollective::plugins::base(
+class mcollective::plugins(
   $plugin_base = $mcollective::params::plugin_base,
   $plugin_subs = $mcollective::params::plugin_subs
 ) inherits mcollective::params {

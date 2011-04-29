@@ -12,14 +12,6 @@ Vagrant::Config.run do |config|
     vm.cpu_count = 1
   end
 
-  # This will provision the box using puppet
-  config.vm.provision :puppet do |puppet|
-    puppet.options        = "-v --vardir=/var/lib/puppet --ssldir=/var/lib/puppet/ssl"
-    puppet.module_path    = "modules"
-    puppet.manifests_path = "manifests"
-    puppet.manifest_file  = "site.pp"
-  end
-
   ('a'..'j').each do |element|
     meta_vm = {
       'ip'   => '192.168.56.' + (element.hash - 90).to_s,
@@ -30,9 +22,17 @@ Vagrant::Config.run do |config|
     config.vm.define meta_vm['vm'] do |avm|
       avm.vm.network(meta_vm['ip'], :adapter => 1)
       avm.vm.host_name = meta_vm['name']
+      # This will provision the box using puppet
+      Vagrant::Config.run do |subconfig|
+        subconfig.vm.provision :puppet do |puppet|
+          puppet.options        = "-v --vardir=/var/lib/puppet --ssldir=/var/lib/puppet/ssl --certname=#{meta_vm['name']}"
+          puppet.module_path    = "modules"
+          puppet.manifests_path = "manifests"
+          puppet.manifest_file  = "site.pp"
+        end
+      end
     end
   end
-
 end
 
 # vim: set filetype=ruby :
