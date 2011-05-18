@@ -2,7 +2,6 @@ Vagrant::Config.run do |config|
   # Change this box name depending on the system you want.
   box = "squeeze64"
 
-  # config.vm.host_name = "bar_box"
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = box
   config.vm.box_url = "http://puppetlabs.s3.amazonaws.com/pub/#{box}.box"
@@ -11,16 +10,15 @@ Vagrant::Config.run do |config|
     vm.memory_size = 128
     vm.cpu_count = 1
   end
-
   ('a'..'j').each do |element|
     meta_vm = {
-      'ip'   => '192.168.56.' + (element.hash - 90).to_s,
+      'ip'   => '192.168.56.' + (element.sum(5) + 9).to_s,
       'name' => element + 'server',
       'vm'   => element.to_sym
     }
 
     config.vm.define meta_vm['vm'] do |avm|
-      avm.vm.network(meta_vm['ip'], :adapter => 1)
+      avm.vm.network(meta_vm['ip'], :adapter => 1, :name => 'vboxnet0')
       avm.vm.host_name = meta_vm['name']
       # This will provision the box using puppet
       Vagrant::Config.run do |subconfig|

@@ -24,12 +24,6 @@ class mcollective::pkg::debian(
     notify  => Exec['apt_update'],
   }
 
-  exec { 'apt_update':
-    command => 'fail',
-    unless  => 'apt-get update',
-    path    => '/bin:/usr/bin:/sbin:/usr/sbin',
-  }
-
   package { 'libstomp-ruby':
     ensure    => $pkg_state,
     provider  => $pkg_provider,

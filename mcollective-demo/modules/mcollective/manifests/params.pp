@@ -1,6 +1,6 @@
 class mcollective::params {
 
-  $mc_topicprefix = '\/topic\/'
+  $mc_topicprefix = '/topic/'
   $mc_main_collective = 'mcollective'
   $mc_collectives = ''
   $mc_libdir = $operatingsystem ? {
