@@ -1,15 +1,18 @@
 class mcollective::params {
 
-  $mc_topicprefix = '/topic/'
-  $mc_main_collective = 'mcollective'
-  $mc_collectives = ''
+  $mc_topicprefix       = '/topic/'
+  $mc_main_collective   = 'mcollective'
+  $mc_collectives       = ''
+  $mc_logfile           = '/var/log/mcollective.log'
+  $mc_loglevel          = 'log'
+  $mc_daemonize         = '1'
+  $mc_security_provider = 'psk'
+  $mc_security_psk      = 'vagrant_mcollective_demo'
+
   $mc_libdir = $operatingsystem ? {
     /(?i-mx:ubuntu|debian)/        => '/usr/share/mcollective/plugins',
     /(?i-mx:centos|fedora|redhat)/ => '/usr/libexec/mcollective',
   }
-  $mc_logfile = '/var/log/mcollective.log'
-  $mc_loglevel = 'log'
-  $mc_daemonize = '1'
 
   $plugin_base = "${mc_libdir}/mcollective"
 
@@ -28,12 +31,12 @@ class mcollective::params {
   $stomp_passwd  = 'marionette'
   $stomp_server  = 'stomp'
   $stomp_ip      = '192.168.56.10'
+  $stomp_port   = '61613'
   $stomp_aliases = [
     'stomp.vagrant.internal',
     'aserver.vagrant.internal',
     'aserver',
   ]
-  $stomp_port   = '61613'
 
   $pkg_provider = $operatingsystem ? {
     /(?i-mx:ubuntu|debian)/ => 'aptitude',

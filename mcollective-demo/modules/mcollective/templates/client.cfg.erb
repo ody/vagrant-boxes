@@ -4,8 +4,8 @@ libdir = <%= mc_libdir %>
 loglevel = <%= mc_loglevel %>
 
 # Plugins
-securityprovider = psk
-plugin.psk = vagrant_puppet_demo
+securityprovider = <%= mc_security_provider %>
+plugin.psk = <%= mc_security_psk %>
 
 # Middleware
 connector = stomp

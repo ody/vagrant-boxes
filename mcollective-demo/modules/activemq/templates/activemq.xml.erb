@@ -7,7 +7,7 @@
 http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd
 http://activemq.apache.org/camel/schema/spring http://activemq.apache.org/camel/schema/spring/camel-spring.xsd">
 
-    <broker xmlns="http://activemq.apache.org/schema/core" brokerName="localhost" useJmx="true">
+    <broker xmlns="http://activemq.apache.org/schema/core" brokerName="localhost" useJmx="true" dataDirectory="/var/lib/activemq" destroyApplicationContextOnStop="true">
         <managementContext>
             <managementContext createConnector="false"/>
         </managementContext>
@@ -16,8 +16,8 @@ http://activemq.apache.org/camel/schema/spring http://activemq.apache.org/camel/
           <statisticsBrokerPlugin/>
           <simpleAuthenticationPlugin>
             <users>
-              <authenticationUser username="<%= scope.lookupvar('activemq::params::stomp_user') %>" password="<%= scope.lookupvar('activemq::params::stomp_password') %>" groups="<%= scope.lookupvar('activemq::params::stomp_user') %>,everyone"/>
-              <authenticationUser username="<%= scope.lookupvar('activemq::params::admin_user') %>" password="<%= scope.lookupvar('activemq::params::admin_password') %>" groups="<%= scope.lookupvar('activemq::params::stomp_user') %>,admins,everyone"/>
+              <authenticationUser username="<%= stomp_user %>" password="<%= stomp_passwd %>" groups="<%= stomp_user %>,everyone"/>
+              <authenticationUser username="<%= stomp_admin_user %>" password="<%= stomp_admin_passwd %>" groups="<%= stomp_user %>,admins,everyone"/>
             </users>
           </simpleAuthenticationPlugin>
           <authorizationPlugin>
@@ -26,8 +26,8 @@ http://activemq.apache.org/camel/schema/spring http://activemq.apache.org/camel/
                 <authorizationEntries>
                   <authorizationEntry queue=">" write="admins" read="admins" admin="admins" />
                   <authorizationEntry topic=">" write="admins" read="admins" admin="admins" />
-                  <authorizationEntry queue="mcollective.>" write="<%= scope.lookupvar('activemq::params::stomp_user') %>" read="<%= scope.lookupvar('activemq::params::stomp_user') %>" admin="<%= scope.lookupvar('activemq::params::stomp_user') %>" />
-                  <authorizationEntry topic="mcollective.>" write="<%= scope.lookupvar('activemq::params::stomp_user') %>" read="<%= scope.lookupvar('activemq::params::stomp_user') %>" admin="<%= scope.lookupvar('activemq::params::stomp_user') %>" />
+                  <authorizationEntry queue="mcollective.>" write="<%= stomp_user %>" read="<%= stomp_user %>" admin="<%= stomp_user %>" />
+                  <authorizationEntry topic="mcollective.>" write="<%= stomp_user %>" read="<%= stomp_user %>" admin="<%= stomp_user %>" />
                   <authorizationEntry topic="ActiveMQ.Advisory.>" read="everyone" write="everyone" admin="everyone"/>
                 </authorizationEntries>
               </authorizationMap>
@@ -48,10 +48,9 @@ http://activemq.apache.org/camel/schema/spring http://activemq.apache.org/camel/
                 </tempUsage>
             </systemUsage>
         </systemUsage>
-          
         <transportConnectors>
             <transportConnector name="openwire" uri="tcp://0.0.0.0:6166"/>
-            <transportConnector name="stomp" uri="stomp://0.0.0.0:<%= scope.lookupvar('activemq::params::stomp_port') %>"/>
+            <transportConnector name="stomp" uri="stomp://0.0.0.0:<%= stomp_port %>"/>
         </transportConnectors>
     </broker>
 </beans>

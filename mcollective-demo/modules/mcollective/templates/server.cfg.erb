@@ -6,8 +6,8 @@ loglevel = <%= mc_loglevel %>
 daemonize = <%= mc_daemonize %>
 
 # Plugins
-securityprovider = psk
-plugin.psk = vagrant_puppet_demo
+securityprovider = <%= mc_security_provider %>
+plugin.psk = <%= mc_security_psk %>
 
 # Registration
 registerinterval = 300

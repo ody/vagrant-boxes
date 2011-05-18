@@ -1,6 +1,10 @@
 class vagrant {
 
   include vagrant::fixes
-  include vagrant::apt
+  case $operatingsystem {
+    debian,ubuntu: {
+      include vagrant::apt
+    }
+  }
 
 }
