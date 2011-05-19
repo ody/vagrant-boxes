@@ -1,9 +1,9 @@
 class vagrant::aptitude {
 
   exec { 'aptitude_update':
-    command    => 'aptitude update',
-    refeshonly => true,
-    path       => '/bin:/usr/bin:/sbin:/usr/sbin',
+    command     => 'aptitude update',
+    refreshonly => true,
+    path        => '/bin:/usr/bin:/sbin:/usr/sbin',
   }
 
   file { 'kumina_repo':

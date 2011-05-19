@@ -1,4 +1,4 @@
-class activemq::service inherits activemq::params {
+class activemq::service {
 
   service { 'activemq':
     ensure     => running,

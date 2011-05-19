@@ -1,13 +1,10 @@
-<!-- File Managed by Puppet -->
 <beans
   xmlns="http://www.springframework.org/schema/beans"
   xmlns:amq="http://activemq.apache.org/schema/core"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
-http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd
-http://activemq.apache.org/camel/schema/spring http://activemq.apache.org/camel/schema/spring/camel-spring.xsd">
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd http://activemq.apache.org/camel/schema/spring http://activemq.apache.org/camel/schema/spring/camel-spring.xsd">
 
-    <broker xmlns="http://activemq.apache.org/schema/core" brokerName="localhost" useJmx="true" dataDirectory="/var/lib/activemq" destroyApplicationContextOnStop="true">
+<broker xmlns="http://activemq.apache.org/schema/core" brokerName="localhost" useJmx="true" dataDirectory="<%= amq_datadir %>" destroyApplicationContextOnStop="true">
         <managementContext>
             <managementContext createConnector="false"/>
         </managementContext>
@@ -50,7 +47,7 @@ http://activemq.apache.org/camel/schema/spring http://activemq.apache.org/camel/
         </systemUsage>
         <transportConnectors>
             <transportConnector name="openwire" uri="tcp://0.0.0.0:6166"/>
-            <transportConnector name="stomp" uri="stomp://0.0.0.0:<%= stomp_port %>"/>
+            <transportConnector name="stomp+nio" uri="stomp+nio://0.0.0.0:<%= stomp_port %>"/>
         </transportConnectors>
     </broker>
 </beans>

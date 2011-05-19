@@ -1,11 +1,11 @@
 node default {
-  class { 'mcollective::server::base': }
   class { 'vagrant': }
+  class { 'mcollective::server::base': }
 }
 
 node 'aserver' {
+  class { 'vagrant': }
+  class { 'activemq::base': }
   class { 'mcollective::server::base': }
   class { 'mcollective::client::base': }
-  class { 'vagrant': }
-  class { 'activemq': }
 }

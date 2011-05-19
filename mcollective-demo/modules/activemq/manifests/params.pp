@@ -24,7 +24,7 @@ class activemq::params  {
   }
 
   $amq_datadir = $operatingsystem ? {
-    default => '/var/log/activemq/activemq-data/',
+    default => '/var/lib/activemq',
   }
 
   $amq_logdir = $operatingsystem ? {

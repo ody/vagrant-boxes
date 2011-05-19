@@ -1,3 +1,0 @@
-class activemq::pkg::redhat {
-
-}

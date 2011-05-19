@@ -5,7 +5,7 @@ class mcollective::server::service {
     enable     => false,
     hasstatus  => true,
     start      => 'RUBYLIB=/usr/src/facter/lib:/usr/src/puppet/lib:$RUBYLIB /etc/init.d/mcollective start',
-    restart    => 'RUBYLIB=/usr/src/facter/lib:/usr/src/puppet/lib:$RUBYLIB /etc/init.d/mcollective restart',
+    stop       => 'RUBYLIB=/usr/src/facter/lib:/usr/src/puppet/lib:$RUBYLIB /etc/init.d/mcollective stop',
     require    => Class['mcollective::pkg'],
     subscribe  => Class['mcollective'],
   }
