@@ -5,7 +5,7 @@ class activemq::config(
   file { 'activemq_conf':
     ensure  => file,
     path    => $amq_configfile,
-    content => template('activemq/activemq.xml.erb'), # Single node activemq setup
+    content => template('activemq/activemq.xml.erb'),
     mode    => '0644',
     owner   => 'root',
     group   => 'root',
